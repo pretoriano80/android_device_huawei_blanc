@@ -1,0 +1,20 @@
+#tp.rc
+service tp-hal-1-0 /vendor/bin/hw/vendor.huawei.hardware.tp@1.0-service
+    class hal
+    user system
+    group system
+    seclabel u:r:recovery:s0	
+	
+#tp hostprocessing daemon
+service aptouch /vendor/bin/aptouch_daemon
+    user root
+    group root
+    seclabel u:r:recovery:s0
+on boot
+    start aptouch
+
+on property:thp.service_enable=1
+    start aptouch
+
+on property:thp.service_enable=0
+    stop aptouch

@@ -1,0 +1,19 @@
+/kernel		emmc		/dev/block/bootdevice/by-name/kernel		flags=display="Kernel";backup=1;flashimg
+/recovery_ramdisk       emmc            /dev/block/bootdevice/by-name/recovery_ramdisk		flags=display="Recovery Ramdisk";backup=0;flashimg
+/ramdisk           emmc      /dev/block/bootdevice/by-name/ramdisk           flags=display="Boot Ramdisk";backup=1
+/cache		ext4		/dev/block/bootdevice/by-name/cache		flags=display="cache";backup=1;flashimg
+/cust           ext4            /dev/block/bootdevice/by-name/cust		flags=display="Cust";backup=1;wipeingui
+/misc		emmc		/dev/block/bootdevice/by-name/misc		flags=display="misc";backup=0
+/oeminfo        emmc            /dev/block/bootdevice/by-name/oeminfo		flags=display="OEMinfo";backup=1
+/data		f2fs		/dev/block/bootdevice/by-name/userdata		flags=display="data";backup=1
+/system		ext4		/dev/block/bootdevice/by-name/system	        flags=display="system";backup=1;flashimg
+/vendor		ext4		/dev/block/bootdevice/by-name/vendor		flags=display="vendor";backup=0;flashimg
+/vendor_image		emmc		/dev/block/bootdevice/by-name/vendor
+/splash2	ext4		/dev/block/bootdevice/by-name/splash2		flags=flashimg=1;backup=1;display="Splash2"
+/odm		ext4		/dev/block/bootdevice/by-name/odm		flags=flashimg=1;backup=1;display="ODM"
+/product	ext4		/dev/block/bootdevice/by-name/product		flags=display="Product";backup=1;wipeingui
+/version	ext4		/dev/block/bootdevice/by-name/version		flags=display="Version";backup=1;wipeingui
+/hisee_fs	ext4		/dev/block/bootdevice/by-name/hisee_fs		flags=backup=1;display="Hisee FS"
+/usbotg		auto		/dev/block/sde1         /dev/block/sde          flags=display="USB OTG";storage;removable;backup=0
+/external_sd	vfat		/dev/block/mmcblk1p1	/dev/block/mmcblk1	flags=display="microsd";storage;wipeingui;removable
+/devices/platform/ff200000.hisi_usb/ff100000.dwc3/* auto auto defaults flags=display="__USB OTG";storage;removable;backup=0
