@@ -1,0 +1,48 @@
+# ADDITIONAL VENDOR DEFAULT PROPERTIES
+ro.zygote=zygote64_32
+dalvik.vm.image-dex2oat-Xms=64m
+dalvik.vm.image-dex2oat-Xmx=64m
+dalvik.vm.dex2oat-Xms=64m
+dalvik.vm.dex2oat-Xmx=512m
+ro.dalvik.vm.native.bridge=0
+dalvik.vm.usejit=true
+dalvik.vm.usejitprofiles=true
+dalvik.vm.dexopt.secondary=true
+dalvik.vm.appimageformat=lz4
+ro.magic.api.version=0.1
+pm.dexopt.first-boot=quicken
+pm.dexopt.boot=verify
+pm.dexopt.install=quicken
+pm.dexopt.bg-dexopt=speed-profile
+pm.dexopt.ab-ota=speed-profile
+debug.atrace.tags.enableflags=0
+ro.product.platform=kirin970
+persist.media.lowlatency.enable=false
+config.disable_consumerir=true
+ro.config.enable_rcc=true
+ro.config.hw_ukey_version=2
+ro.config.hw_ch_alg=2
+ro.treble.enabled=true
+persist.touch_vsync_opt = 1
+persist.touch_move_opt = 1
+ro.oem_unlock_supported=1
+ro.sys.sdcardfs=1
+persist.sys.sdcardfs.emulated=1
+persist.sys.sdcardfs.public=1
+persist.sys.usb.config=mtp,adb
+sys.usb.configfs=1
+sys.usb.controller=ff100000.dwc3
+
+# ADDITIONAL VENDOR BUILD PROPERTIES
+#
+ro.carrier=unknown
+persist.sys.cpuset.enable=1
+persist.sys.cpuset.subswitch=250
+persist.sys.fast_h_duration=2000
+persist.sys.fast_h_max=50
+persist.sys.max_rdh_delay=0
+persist.sys.iaware.cpuenable=true
+ro.opengles.version=196610
+ro.sf.lcd_density=480
+hw.lcd.density=480
+persist.fw.force_adoptable=true
