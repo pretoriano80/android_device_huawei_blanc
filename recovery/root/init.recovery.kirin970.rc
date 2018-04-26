@@ -6,9 +6,7 @@ import /init.recovery.hlthchrg.rc
 on early-init
 	
     # Shouldn't be necessary, but sdcard won't start without it. http://b/22568628.
-    mkdir /mnt 0775 root system
-
-    setprop persist.service.hdb.enable true	
+    mkdir /mnt 0775 root system	
 
 service prepprops /sbin/setprop.sh
     oneshot
@@ -22,7 +20,8 @@ on init
     copy /default.prop /dev/urandom
 
     # Backward compatibility.
-    #symlink /system/etc /etc
+    symlink /system/etc /etc
+    symlink /system/vendor /vendor
     symlink /sys/kernel/debug /d
 
     # Mount cgroup mount point for cpu accounting
@@ -96,14 +95,18 @@ service fixlinks /sbin/fixlinks.sh
 seclabel u:r:recovery:s0
 
 on fs
-   wait /dev/block/bootdevice/by-name/system
+    mkdir /system
+    mkdir /data
+    mkdir /vendor
+    wait /dev/block/bootdevice/by-name/system
+    wait /dev/block/bootdevice/by-name/vendor
     wait /dev/block/bootdevice/by-name/userdata
-    wait /dev/block/bootdevice/by-name/vbmeta
+    #wait /dev/block/bootdevice/by-name/vbmeta
     #mount_all /vendor/etc/fstab.${ro.hardware}
     #mount_all /fstab.${ro.hardware}
     mount ext4 /dev/block/bootdevice/by-name/system /system ro
     mount ext4 /dev/block/bootdevice/by-name/vendor /vendor ro
-    mount_all /fstab.${ro.hardware}.data	
+    #mount_all /fstab.${ro.hardware}.data	
     
 on fs && property:sys.usb.configfs=0
     write /sys/class/android_usb/android0/f_ffs/aliases adb

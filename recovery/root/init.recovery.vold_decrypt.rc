@@ -14,21 +14,6 @@ service teecd /vendor/bin/teecd
     user root
     group root readproc
     seclabel u:r:tee:s0
-	
-#system_teecd
-#service system_teecd /system/bin/system_teecd
-    #socket tui_daemon stream 660 root system
-    #socket tee-multi-user stream 660 root system
-    #class core
-    #user root
-    #group root readproc
-
-#service teelogcat /vendor/bin/tlogcat -f
-    #class late_start
-    #user root
-    #group system
-    #disabled
-    #seclabel u:r:hisilogcat:s0	
 
 
 #android gatekeeper rc
@@ -37,16 +22,8 @@ service gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
     user system
     group system
     seclabel u:r:recovery:s0
-	
-#vndservicemanage.rc
-#service vndservicemanager /vendor/bin/vndservicemanager /dev/vndbinder
-#    class core
-#    user system
-#    group system readproc
-#    writepid /dev/cpuset/system-background/tasks /dev/blkio/system-background/tasks /dev/stune/system-background/tasks	
 
 #servicemanager rc
-#service servicemanager /system/bin/servicemanager
 service servicemanager /sbin/servicemanager
     class core animation
     user root
@@ -63,11 +40,24 @@ service hwservicemanager /sbin/hwservicemanager
     seclabel u:r:recovery:s0	
 	
 #keymaster rc
+service keystore_auth /sbin/keystore_auth
+    oneshot
+    user system
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+service keystore /sbin/keystore /data/misc/keystore
+    user root
+    group root drmrpc readproc
+    disabled
+    seclabel u:r:recovery:s0
+
 service keymaster-3-0 /vendor/bin/hw/android.hardware.keymaster@3.0-service
     class early_hal
     user system
     group system drmrpc log
-    seclabel u:r:recovery:s0	
+    seclabel u:r:recovery:s0
 	
 #init.recovery.huawei.rc
 service oeminfo_nvm /sbin/oeminfo_nvm_server
@@ -79,20 +69,15 @@ service fixsysven /sbin/fixsysven.sh
     oneshot
     disabled
     seclabel u:r:recovery:s0
-
-on init
-    write /sys/module/hisi_nve/parameters/nve /dev/block/bootdevice/by-name/nvme
-    mount /tmp /tmp tmpfs
-    # change nve device visit permission
-    wait /dev/nve0
-    chmod 0640 /dev/nve0
-    write /proc/sys/vm/max_map_count 1000000
 	
 on fs
     wait /dev/block/bootdevice/by-name/oeminfo
     start oeminfo_nvm	
 	
 on post-fs-data
+    mkdir /system
+    mkdir /vendor
+    mkdir /data
     start teecd
     
     # We chown/chmod /data again so because mount is run as root + defaults
@@ -100,48 +85,27 @@ on post-fs-data
     chmod 0771 /data
     # We restorecon /data in case the userdata partition has been reset.
     restorecon /data
-
-    #mount ext4 /dev/block/bootdevice/by-name/system /system wait ro
-    # Make sure we have the device encryption key.
-    #start vold
-
-    setprop vold.crypto_unencrypt_updatedir /data/update
-
-    #setprop vold.status start
-    
-    #disable readdir_ra
-    #set_readdir_ra userdata 0
-
-    #restorecon_files_under_dir /data/system
-
-    # If there is no post-fs-data action in the init.<device>.rc file, you
-    # must uncomment this line, otherwise encrypted filesystems
-    # won't work.
-    # Set indication (checked by vold) that we have finished this action
-    setprop vold.post_fs_data_done 1
-    #load_data_version_prop
-    #cust_parse	
 	
 on late-fs
     # HALs required before storage encryption can get unlocked (FBE/FDE)
     class_start early_hal
 
 on property:twrp.decryptdone=true
-    stop update_engine
+        stop update_engine
 	stop gpuassistant
 	stop lmkd
 	stop hidl_memory
-    stop surfaceflinger
+        stop surfaceflinger
 	stop webview_zygote32
 	stop webview_zygote64
 	stop system_teecd
 	stop vold_recovery
-	stop teecd
 	stop vold
-    stop gatekeeper-1-0
-    stop keymaster-3-0
-    stop servicemanager
-	stop hwservicemanager
-    umount /vendor
+	stop teecd
+        stop gatekeeper-1-0
+        stop keymaster-3-0
+        stop servicemanager
+        stop hwservicemanager
+        umount /vendor
 	umount /system
 	start fixsysven
