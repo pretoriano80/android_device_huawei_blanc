@@ -95,9 +95,6 @@ service fixlinks /sbin/fixlinks.sh
 seclabel u:r:recovery:s0
 
 on fs
-    mkdir /system
-    mkdir /data
-    mkdir /vendor
     wait /dev/block/bootdevice/by-name/system
     wait /dev/block/bootdevice/by-name/vendor
     wait /dev/block/bootdevice/by-name/userdata
