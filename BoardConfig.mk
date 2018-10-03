@@ -21,6 +21,8 @@ TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := generic
 
+BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
+
 BOARD_KERNEL_CMDLINE := 
 
 BOARD_KERNEL_BASE := 0x10000000
@@ -44,9 +46,9 @@ BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 
 # SELinux
 
-BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
-BOARD_PLAT_PUBLIC_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/public
-include vendor/omni/sepolicy/sepolicy.mk
+#BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
+#BOARD_PLAT_PUBLIC_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/public
+#include vendor/omni/sepolicy/sepolicy.mk
 
 # Properties
 #TARGET_SYSTEM_PROP := $(DEVICE_PATH)/system.prop

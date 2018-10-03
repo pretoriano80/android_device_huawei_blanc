@@ -41,14 +41,13 @@ PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/rootdir/teecd:recovery/root/sbin/teecd \
 	$(LOCAL_PATH)/rootdir/toybox_static:recovery/root/sbin/toybox_static \
 
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-ro.build.version.sdk=  \
-ro.build.version.release=  \
-ro.build.version.security_patch= 
+#PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+#ro.build.version.sdk=  \
+#ro.build.version.release=  \
+#ro.build.version.security_patch= 
 
 
-	
-ALLOW_MISSING_DEPENDENCIES := true	
+ALLOW_MISSING_DEPENDENCIES := true
 
 PRODUCT_NAME := omni_blanc
 PRODUCT_DEVICE := blanc
